@@ -2,12 +2,18 @@ import React from "react";
 import Todo from "./Todo";
 import "./Todo.css";
 
-export default function TodoList (props) {
+const toDoList = (props) => {
+
+    const { state } = props; 
     return (
         <div>
-            {props.state.map(todo => (
-                <Todo key={todo.id} todo={todo} dispatch={props.dispatch} />
-            ))}
+            {
+                state.map((todo, id) => {
+                    return <Todo key={id} todo={todo} />
+                })
+            }
         </div>
     );
 }
+
+export default toDoList;

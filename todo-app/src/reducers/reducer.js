@@ -1,38 +1,23 @@
-export const initialState = [
-    {
-        item: 'Walk a shelter dog',
-        completed: false,
-        id: 3892987543,
-    },
+export const initialState = [ // default render info
     {
         item: 'Learn about reducers',
         completed: false,
-        id: 3892987544,
-    },
-];
+        id: 3892987589
+    }
+]
 
 export const todoReducer = (state, action) => {
-    switch(action.type) {
-        case 'NEW_TODO':
-            return [
-                ...state,
-                {
-                    item: action.payload,
-                    completed: false,
-                    id: Date.now()
-                }
-            ];
-        case 'CROSS_OFF':
-                return state.map(todo => {
-                    if (state.id === todo.id) {
-                      return {...todo, completed: !todo.completed}
-                    }
-                    else {
-                      return todo;
-                    }
-                })
-        case 'CLEAR_COMPLETE': 
-            return state.filter(todo => !todo.completed);
+    switch (action.type) { // list of desired effects
+        case 'NEW_TODO': 
+            return [...state, action.payload]
+        case 'MARK_COMPLETE':
+            return [...state.map(todo => todo.id === action.payload ? {...todo, completed: !todo.completed } : todo)];
+            // ^ create a new array of the same to-do list but with the item clicked marked as done (or not)
+        case 'CLEAR_COMPLETED':
+            return [...state.filter(todo => !todo.completed)]
+            // ^ filter out the to-do's that have already been completed
+        case 'CLEAR_ALL':
+            return [];
         default: 
             return state;
     }
